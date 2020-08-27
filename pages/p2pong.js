@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Board from "../components/Board"
 
 export default function Home() {
+  const numPlayers = 3;
   return (
-      <canvas style={{width: 500, height: 500, border: "1px solid black", margin: 5}}>
-          
-      </canvas>
+    <Board numPlayers= {numPlayers}/>
   )
 }
