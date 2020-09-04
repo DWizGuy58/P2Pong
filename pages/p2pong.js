@@ -4,9 +4,7 @@ import Board from "../components/Board"
 import CubePiece from "../components/CubePiece"
 
 export default function Home() {
-  const numPlayers = 3;
   return (
-    //<Board numPlayers= {numPlayers}/>
-    <CubePiece />
+    <Board numPlayers={8}></Board>
   )
 }
