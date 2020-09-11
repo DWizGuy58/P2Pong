@@ -7,6 +7,14 @@ const Board = ({ numPlayers }) => {
     const angleInRadians = (Math.PI * 2) / numPlayers;
     console.log("Angle", angleInRadians);
 
+    const drawGame = (ctx) => {
+        ctx.translate(width / 2,height / 2);
+        drawBoard(ctx);
+        for (let playerNumber = 0; playerNumber < numPlayers; playerNumber++) {
+            drawPlayer(ctx, playerNumber);
+        }
+    }
+
     const drawBoard = (ctx) => {            
         ctx.beginPath();
         for (var i = 1; i <= numPlayers; i++) {
@@ -23,31 +31,24 @@ const Board = ({ numPlayers }) => {
     }
 
     const drawPlayer = (ctx, playerNumber) => {
-        const playerLength = sideLength * 0.9;
+        ctx.strokeStyle = '#ff0000';
+        const vertex1X = sideLength * Math.cos(angleInRadians * playerNumber);
+        const vertex1Y = sideLength * Math.sin(angleInRadians * playerNumber);
 
-        const vertex1X = playerLength * Math.cos(angleInRadians * 0);
-        const vertex1Y = playerLength * Math.sin(angleInRadians * 0);
-
-        const vertex2X = playerLength * Math.cos(angleInRadians * 1);
-        const vertex2Y = playerLength * Math.sin(angleInRadians * 1);
+        const vertex2X = sideLength * Math.cos(angleInRadians * playerNumber + 1);
+        const vertex2Y = sideLength * Math.sin(angleInRadians * playerNumber + 1);
 
         const slope = (vertex2Y - vertex1Y) / (vertex2X - vertex1X);
+        const translationFactor = 2 * (slope > 0 ? 1 : -1);
 
-
+        
         const quarterX = (vertex2X - vertex1X) / 4;
         const quarterY = slope * quarterX;
         ctx.beginPath();
-        drawPoint(ctx);
 
-        ctx.moveTo(vertex1X, vertex1Y);
+        ctx.moveTo(vertex1X , vertex1Y);
         ctx.lineTo(vertex1X + quarterX, vertex1Y + quarterY);
         ctx.stroke();
-    }
-
-    const assignUserPiece = ({ctx, edgeSide}) => {
-        if (drawPlayer) {
-            
-        }
     }
 
     useEffect(() => {
@@ -55,10 +56,7 @@ const Board = ({ numPlayers }) => {
             width = canvasRef.current.width;
             height = canvasRef.current.height;
             const ctx = canvasRef.current.getContext("2d");
-            ctx.translate(width / 2,height / 2);
-
-            drawBoard(ctx);
-            drawPlayer(ctx, 0);
+            drawGame(ctx);
         }
       }, [canvasRef]);
 
