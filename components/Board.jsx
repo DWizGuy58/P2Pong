@@ -1,18 +1,25 @@
 import {useRef, useEffect} from 'react'
+import { handleKeyDown, handleUserClick } from '../eventlistners/userinput';
 
 const Board = ({ numPlayers }) => {
     const canvasRef = useRef(null);
     let width, height;
     const sideLength = 50;
     const angleInRadians = (Math.PI * 2) / numPlayers;
-    console.log("Angle", angleInRadians);
 
-    const drawGame = (ctx) => {
+    const drawGame = () => {
+        width = canvasRef.current.width;
+        height = canvasRef.current.height;
+        const ctx = canvasRef.current.getContext("2d");
+        //ctx.clearRect(0, 0, width, height);
+        ctx.save();
         ctx.translate(width / 2,height / 2);
         drawBoard(ctx);
         for (let playerNumber = 0; playerNumber < numPlayers; playerNumber++) {
             drawPlayer(ctx, playerNumber);
         }
+        ctx.restore();
+        requestAnimationFrame(drawGame);
     }
 
     const drawBoard = (ctx) => {            
@@ -51,12 +58,11 @@ const Board = ({ numPlayers }) => {
         ctx.stroke();
     }
 
+
     useEffect(() => {
-        if (canvasRef.current !== null) {
-            width = canvasRef.current.width;
-            height = canvasRef.current.height;
-            const ctx = canvasRef.current.getContext("2d");
-            drawGame(ctx);
+        document.addEventListener("keydown", handleKeyDown);
+        if (canvasRef.current !== null) {     
+            requestAnimationFrame(drawGame);
         }
       }, [canvasRef]);
 
