@@ -19,7 +19,7 @@ const Board = ({ numPlayers }) => {
             drawPlayer(ctx, playerNumber);
         }
         ctx.restore();
-        requestAnimationFrame(drawGame);
+        //requestAnimationFrame(drawGame);
     }
 
     const drawBoard = (ctx) => {            
@@ -39,22 +39,27 @@ const Board = ({ numPlayers }) => {
 
     const drawPlayer = (ctx, playerNumber) => {
         ctx.strokeStyle = '#ff0000';
-        const vertex1X = sideLength * Math.cos(angleInRadians * playerNumber);
-        const vertex1Y = sideLength * Math.sin(angleInRadians * playerNumber);
+        const playerSideLength = sideLength * 0.9;
+        //ctx.lineTo(sideLength*Math.cos(angleInRadians*i),sideLength*Math.sin(angleInRadians*i))
 
-        const vertex2X = sideLength * Math.cos(angleInRadians * playerNumber + 1);
-        const vertex2Y = sideLength * Math.sin(angleInRadians * playerNumber + 1);
+        const x1 = playerSideLength * Math.cos(angleInRadians * playerNumber);
+        const y1 = playerSideLength * Math.sin(angleInRadians * playerNumber);
 
-        const slope = (vertex2Y - vertex1Y) / (vertex2X - vertex1X);
-        const translationFactor = 2 * (slope > 0 ? 1 : -1);
-
-        
-        const quarterX = (vertex2X - vertex1X) / 4;
-        const quarterY = slope * quarterX;
+        const x2 = playerSideLength * Math.cos(angleInRadians * (playerNumber + 1));
+        const y2 = playerSideLength * Math.sin(angleInRadians * (playerNumber + 1));        
+        console.log(playerNumber, x1, y1, x2, y2);
         ctx.beginPath();
+        ctx.moveTo(x1, y1);
 
-        ctx.moveTo(vertex1X , vertex1Y);
-        ctx.lineTo(vertex1X + quarterX, vertex1Y + quarterY);
+        const slope = (y2 - y1) / (x2 - x1);
+        const x3 = x1 + ((x2 - x1) * 0.5);
+        const y3 = y1 + ((y2 - y1) * 0.5);
+        //ctx.moveTo(x3, y3);
+
+
+
+        //ctx.moveTo(vertex1X, vertex1Y);
+        ctx.lineTo(x3, y3);
         ctx.stroke();
     }
 
