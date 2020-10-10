@@ -19,6 +19,23 @@ class Game {
     this.board.draw();
     this.ctx.restore();
   }
+
+  drawRect(num) {
+      // Clear the entire canvas
+     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  
+     this.ctx.fillStyle = '#ff8080';
+     this.ctx.fillRect(num, num, this.canvas.width, this.canvas.height);
+  }
+
+
+  mainLoop() {
+    var num = 0;
+    while(true) {
+      this.drawRect(num);
+      num++;
+    }
+  }
 }
 
 export default Game;

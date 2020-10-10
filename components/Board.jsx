@@ -9,7 +9,7 @@ const Board = ({ numPlayers }) => {
         //document.addEventListener("keydown", handleKeyDown);
         if (canvasRef.current !== null) {
             const game = new Game(8, canvasRef.current);     
-            game.draw();
+            game.mainLoop();
         }
       }, [canvasRef]);
 

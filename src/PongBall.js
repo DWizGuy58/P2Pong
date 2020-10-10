@@ -1,5 +1,4 @@
 class PongBall{
-
     // Empty constructor on the ball 
     constructor(ctx, x, y, radius, velocityX, velocityY, width=4, height=4) {
         this.ctx = ctx;
@@ -13,14 +12,14 @@ class PongBall{
     }
 
     // Update the game position going vertical & diagonal at a constant point
-    update() {
+    update(velocityX=7, velocityY=7) {
         this.x += this.velocityX;
         this.y += this.velocityY;
     }
 
     // TODO - update directory
     changeX() {
-        
+        x += this.velocityX;
     }
 
     // TODO FIX ABILITY TO ACCESS THE CANVAS
@@ -37,7 +36,6 @@ class PongBall{
       this.ctx.fillStyle = 'green';
       this.ctx.fill();
       this.ctx.stroke();
-      this.update();
     }
 }
 
